@@ -38,11 +38,27 @@
             android:entries="@array/urls"></Spinner>
 
     </LinearLayout>
-
-    <WebView
-        android:id="@+id/webview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
+        <TextView
+            android:id="@+id/txt_loadtime"
+            android:layout_width="wrap_content"
+            android:text="加载时间："
+            android:textColor="#ff0000"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_go_x5"
+            android:text="点击跳转 X5"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -1,7 +1,10 @@
 package ren.yale.android.cachewebview;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.io.InputStream;
 
@@ -36,6 +40,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main3);
 
         mWebView = findViewById(R.id.webview);
+        final TextView txt_loadtime
+                = findViewById(R.id.txt_loadtime);
+        findViewById(R.id.btn_go_x5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,X5Activity.class));
+            }
+        });
 
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -65,11 +77,19 @@ public class MainActivity extends Activity {
         });
         initSettings();
         mWebView.setWebViewClient(new WebViewClient(){
+            private long loadTime;
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loadTime = System.currentTimeMillis();
+                txt_loadtime.setText("开始加载");
+            }
 
-
+            @SuppressLint("SetTextI18n")
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                txt_loadtime.setText("加载时间：" + (System.currentTimeMillis() - loadTime));
             }
 
            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
